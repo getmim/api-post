@@ -19,7 +19,9 @@ class PostController extends \Api\Controller
 
         list($page, $rpp) = $this->req->getPager();
 
-        $cond = [];
+        $cond = [
+            'status' => 3
+        ];
         if($q = $this->req->getQuery('q'))
             $cond['q'] = $q;
 
