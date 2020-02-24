@@ -41,6 +41,28 @@ class PostController extends \Api\Controller
         ]);
     }
 
+    public function randomAction() {
+        if(!$this->app->isAuthorized())
+            return $this->resp(401);
+
+        list($page, $rpp) = $this->req->getPager();
+
+        $cond = [
+            'status' => 3
+        ];
+        if($q = $this->req->getQuery('q'))
+            $cond['q'] = $q;
+
+        $pages = Post::get($cond, $rpp, $page, ['RAND()' => true]);
+        $pages = !$pages ? [] : Formatter::formatMany('post', $pages, ['user']);
+
+        foreach($pages as &$pg)
+            unset($pg->meta);
+        unset($pg);
+
+        $this->resp(0, $pages);
+    }
+
     public function singleAction() {
         if(!$this->app->isAuthorized())
             return $this->resp(401);

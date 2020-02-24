@@ -2,7 +2,7 @@
 
 return [
     '__name' => 'api-post',
-    '__version' => '0.0.1',
+    '__version' => '0.1.0',
     '__git' => 'git@github.com:getmim/api-post.git',
     '__license' => 'MIT',
     '__author' => [
@@ -43,6 +43,13 @@ return [
                     'value' => '/post'
                 ],
                 'handler' => 'ApiPost\\Controller\\Post::index',
+                'method' => 'GET'
+            ],
+            'apiPostRandom' => [
+                'path' => [
+                    'value' => '/post/random'
+                ],
+                'handler' => 'ApiPost\\Controller\\Post::random',
                 'method' => 'GET'
             ],
             'apiPostSingle' => [
