@@ -26,7 +26,10 @@ class PostController extends \Api\Controller
             $cond['q'] = $q;
 
         $pages = Post::get($cond, $rpp, $page, ['created' => false]);
-        $pages = !$pages ? [] : Formatter::formatMany('post', $pages, ['user']);
+        $fmt   = ['user'];
+        if(module_exists('post-category'))
+            $fmt[] = 'category';
+        $pages = !$pages ? [] : Formatter::formatMany('post', $pages, $fmt);
 
         foreach($pages as &$pg)
             unset($pg->meta);
@@ -54,7 +57,10 @@ class PostController extends \Api\Controller
             $cond['q'] = $q;
 
         $pages = Post::get($cond, $rpp, $page, ['RAND()' => true]);
-        $pages = !$pages ? [] : Formatter::formatMany('post', $pages, ['user']);
+        $fmt   = ['user'];
+        if(module_exists('post-category'))
+            $fmt[] = 'category';
+        $pages = !$pages ? [] : Formatter::formatMany('post', $pages, $fmt);
 
         foreach($pages as &$pg)
             unset($pg->meta);
